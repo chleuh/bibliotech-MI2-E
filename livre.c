@@ -8,7 +8,6 @@ int chargerLivres(Livre livres[]) {
     if (f == NULL) return 0;
 
     int i = 0;
-    // On boucle tant qu'on a de la place dans le tableau (limite 100)
     while (i < 100) {
         int score = fscanf(f, "%d %s %s %s %d", 
                            &livres[i].id, 
@@ -23,7 +22,7 @@ int chargerLivres(Livre livres[]) {
     }
 
     fclose(f);
-    return i; // On renvoie le nombre total de livres lus
+    return i; 
 }
 
 // Affiche uniquement les livres DISPONIBLES (disponible == 1)
@@ -66,7 +65,7 @@ void afficherLivresEmpruntes(Livre livres[], int n) {
     }
 }
 
-// Sauvegarde l'état des livres (écrase le fichier avec les nouvelles disponibilités)
+// Sauvegarde l'état des livres 
 void sauvegarderLivres(Livre livres[], int n) {
     FILE *f = fopen("txt/livres.txt", "w");
     if (f == NULL) {
