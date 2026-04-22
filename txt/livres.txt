@@ -1,0 +1,10 @@
+1 Le_Petit_Prince Saint-Exupery Conte 1
+2 L_Etranger Albert_Camus Roman 1
+3 1984 George_Orwell Dystopie 1
+4 Le_Horla Guy_de_Maupassant Fantastique 1
+5 Germinal Emile_Zola Drame 1
+6 Une_si_longue_lettre Mariama_Ba Roman 1
+7 Harry_Potter_1 J.K_Rowling Fantaisie 1
+8 Alchimiste Paulo_Coelho Aventure 1
+9 Les_Miserables Victor_Hugo Classique 1
+10 Hamlet William_Shakespeare Theatre 1
