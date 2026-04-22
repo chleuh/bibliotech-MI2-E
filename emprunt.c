@@ -5,16 +5,18 @@
 // 1. CHARGER : Lit le fichier des emprunts et les met dans le tableau
 int chargerEmprunts(Emprunt emprunts[]) {
     FILE *f = fopen("txt/emprunts.txt", "r");
-    if (f == NULL) {a
+
+    if (f == NULL) {
         return 0; 
     }
+
     int i = 0;
     while (i < 100) {
-        // On lit : ID du livre, Login de l'emprunteur et Date (format long)
         int lus = fscanf(f, "%d %s %ld", 
                          &emprunts[i].idLivre, 
                          emprunts[i].login, 
                          &emprunts[i].dateEmprunt);
+
         if (lus != 3) {
             break;
         }
@@ -25,8 +27,9 @@ int chargerEmprunts(Emprunt emprunts[]) {
     return i; 
 }
 
-// 2. AJOUTER : Enregistre un nouvel emprunt à la suite du fichier
+// 2. AJOUTER : Ajoute un emprunt à la fin du fichier texte
 void ajouterEmprunt(Emprunt e) {
+    // Mode "a" : ouvre le fichier en mode ajout à la fin
     FILE *f = fopen("txt/emprunts.txt", "a");
 
     if (f != NULL) {
