@@ -34,7 +34,14 @@ void gererInterfaceUtilisateur(User current, Livre livres[], Emprunt emprunts[])
         nbLivres = chargerLivres(livres);
         nbEmprunts = chargerEmprunts(emprunts);
 
-        long delai = (strcmp(current.role, "prof") == 0) ? 180 : 120;
+        // --- CHANGEMENT 1 : Remplacement du ternaire pour le délai ---
+        long delai;
+        if (strcmp(current.role, "prof") == 0) {
+            delai = 180;
+        } else {
+            delai = 120;
+        }
+
         int countPerso = 0, aRetard = 0;
 
         // --- SECTION : AFFICHAGE DES EMPRUNTS ---
@@ -73,7 +80,14 @@ void gererInterfaceUtilisateur(User current, Livre livres[], Emprunt emprunts[])
 
         // --- LOGIQUE DES ACTIONS ---
         if (action == 1) {
-            int max = (strcmp(current.role, "prof") == 0) ? 5 : 3;
+            // --- CHANGEMENT 2 : Remplacement du ternaire pour le quota max ---
+            int max;
+            if (strcmp(current.role, "prof") == 0) {
+                max = 5;
+            } else {
+                max = 3;
+            }
+
             if (aRetard) printf("\n[BLOQUE] Rends tes livres en retard !\n");
             else if (countPerso >= max) printf("\n[BLOQUE] Quota atteint.\n");
             else {
