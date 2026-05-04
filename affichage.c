@@ -80,7 +80,6 @@ void gererInterfaceUtilisateur(User current, Livre livres[], Emprunt emprunts[])
 
         // --- LOGIQUE DES ACTIONS ---
         if (action == 1) {
-            // --- CHANGEMENT 2 : Remplacement du ternaire pour le quota max ---
             int max;
             if (strcmp(current.role, "prof") == 0) {
                 max = 5;
