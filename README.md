@@ -12,7 +12,7 @@ Placez-vous dans le dossier du projet.
 
 Tapez la commande suivante pour compiler :
 
-make
+make         
 
 Cela générera un exécutable nommé 'exec'.
 
