@@ -26,7 +26,7 @@ void sauvegarderUser(User u) {
     FILE *f = fopen("txt/users.txt", "a");
 
     if (f != NULL) {
-        fprintf(f, "%s %s %s\n", u.login, u.password, u.role);
+        fprintf(f, "\n %s %s %s\n", u.login, u.password, u.role);
         fclose(f);
     }
 }
