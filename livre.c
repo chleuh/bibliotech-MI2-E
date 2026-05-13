@@ -1,96 +1,120 @@
 #include <stdio.h>
 #include <string.h>
 #include "livre.h"
+#include "couleurs.h"
 
-// Charge les livres depuis le fichier
+/* -----------------------------------------------
+   livre.c  -  Gestion des livres
+   ----------------------------------------------- */
+
+// Charge les livres depuis le fichier texte
 int chargerLivres(Livre livres[]) {
     FILE *f = fopen("txt/livres.txt", "r");
     if (f == NULL) return 0;
 
     int i = 0;
     while (i < 100) {
-        int score = fscanf(f, "%d %s %s %s %d", 
-                           &livres[i].id, 
-                           livres[i].titre, 
-                           livres[i].auteur, 
-                           livres[i].categorie, 
+        int score = fscanf(f, "%d %s %s %s %d",
+                           &livres[i].id,
+                           livres[i].titre,
+                           livres[i].auteur,
+                           livres[i].categorie,
                            &livres[i].disponible);
-        if (score != 5) {
-            break; 
-        }
+        if (score != 5) break;
         i++;
     }
 
     fclose(f);
-    return i; 
+    return i;
 }
 
-// Affiche uniquement les livres DISPONIBLES (disponible == 1)
+// Affiche les livres disponibles avec couleurs et emojis
 void afficherLivres(Livre livres[], int n) {
-    printf("\n--- Liste des Livres Disponibles ---\n");
-    int compteur = 0;
+    printf("\n" CYAN "📚  ══════════════════════════════════════════\n");
+    printf("      Liste des Livres Disponibles\n");
+    printf("══════════════════════════════════════════\n" RESET);
 
+    int compteur = 0;
     for (int i = 0; i < n; i++) {
         if (livres[i].disponible == 1) {
-            printf("ID: %d | %s - %s [%s]\n", 
-                   livres[i].id, 
-                   livres[i].titre, 
-                   livres[i].auteur, 
-                   livres[i].categorie);
-            compteur++; 
+            printf(VERT "  ✅ ID: %d" RESET " | %s - %s [%s]\n",
+                   livres[i].id, livres[i].titre,
+                   livres[i].auteur, livres[i].categorie);
+            compteur++;
         }
     }
+
     if (compteur == 0) {
-        printf("Aucun livre disponible en rayon.\n");
+        printf(JAUNE "  😔 Aucun livre disponible en rayon.\n" RESET);
     }
+    printf(CYAN "══════════════════════════════════════════\n" RESET);
 }
 
-// Affiche uniquement les livres EMPRUNTÉS (disponible == 0)
+// Affiche les livres empruntés avec message clair
 void afficherLivresEmpruntes(Livre livres[], int n) {
-    printf("\n--- Liste des Livres Empruntes ---\n");
-    int compteur = 0;
+    printf("\n" ROUGE "📕  ══════════════════════════════════════════\n");
+    printf("      Liste des Livres Empruntés\n");
+    printf("══════════════════════════════════════════\n" RESET);
 
+    int compteur = 0;
     for (int i = 0; i < n; i++) {
         if (livres[i].disponible == 0) {
-            printf("ID: %d | %s - %s [%s]\n", 
-                   livres[i].id, 
-                   livres[i].titre, 
-                   livres[i].auteur, 
-                   livres[i].categorie);
-            compteur++; 
+            printf(ROUGE "  ❌ ID: %d" RESET " | %s - %s [%s]"
+                   JAUNE "  ⚠️  DÉJÀ EMPRUNTÉ\n" RESET,
+                   livres[i].id, livres[i].titre,
+                   livres[i].auteur, livres[i].categorie);
+            compteur++;
         }
     }
+
     if (compteur == 0) {
-        printf("Aucun livre n'est emprunte actuellement.\n");
+        printf(VERT "  🎉 Aucun livre n'est emprunté actuellement.\n" RESET);
     }
+    printf(ROUGE "══════════════════════════════════════════\n" RESET);
 }
 
-// Sauvegarde l'état des livres 
+// Sauvegarde l'état de tous les livres dans le fichier texte
 void sauvegarderLivres(Livre livres[], int n) {
     FILE *f = fopen("txt/livres.txt", "w");
     if (f == NULL) {
-        printf("[ERREUR] Impossible de sauvegarder les livres.\n");
+        printf(ROUGE "  [ERREUR] Impossible de sauvegarder les livres.\n" RESET);
         return;
     }
 
     for (int i = 0; i < n; i++) {
-        fprintf(f, "%d %s %s %s %d\n", livres[i].id, livres[i].titre, 
-                livres[i].auteur, livres[i].categorie, livres[i].disponible);
+        fprintf(f, "%d %s %s %s %d\n",
+                livres[i].id, livres[i].titre,
+                livres[i].auteur, livres[i].categorie,
+                livres[i].disponible);
     }
     fclose(f);
 }
 
-// TRI à bulles alphabétique sur le titre
+// Tri à bulles par TITRE (A → Z)
 void trierLivresAlpha(Livre livres[], int n) {
-    Livre temp; 
+    Livre temp;
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
-            // Utilise strcmp de <string.h> pour comparer les titres
             if (strcmp(livres[j].titre, livres[j+1].titre) > 0) {
-                temp = livres[j];
-                livres[j] = livres[j+1];
+                temp        = livres[j];
+                livres[j]   = livres[j+1];
                 livres[j+1] = temp;
             }
         }
     }
+}
+
+// Tri à bulles par AUTEUR (A → Z)
+void trierAuteursAlpha(Livre livres[], int n) {
+    Livre temp;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (strcmp(livres[j].auteur, livres[j+1].auteur) > 0) {
+                temp        = livres[j];
+                livres[j]   = livres[j+1];
+                livres[j+1] = temp;
+            }
+        }
+    }
+    // pas de printf ici, sinon ca s'affiche en boucle
 }

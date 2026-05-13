@@ -1,22 +1,25 @@
 all: exec
 
-exec: main.o user.o livre.o emprunt.o affichage.o
-	gcc main.o user.o livre.o emprunt.o affichage.o -o exec
+exec: main.o user.o livre.o emprunt.o affichage.o rendre.o
+	gcc main.o user.o livre.o emprunt.o affichage.o rendre.o -o exec
 
-main.o: main.c user.h livre.h emprunt.h affichage.h
+main.o: main.c
 	gcc -c main.c
 
-user.o: user.c user.h
+user.o: user.c
 	gcc -c user.c
 
-livre.o: livre.c livre.h
+livre.o: livre.c
 	gcc -c livre.c
 
-emprunt.o: emprunt.c emprunt.h
+emprunt.o: emprunt.c
 	gcc -c emprunt.c
 
-affichage.o: affichage.c affichage.h user.h livre.h emprunt.h
+affichage.o: affichage.c
 	gcc -c affichage.c
+
+rendre.o: rendre.c
+	gcc -c rendre.c
 
 clean:
 	rm -f *.o exec

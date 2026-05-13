@@ -5,10 +5,14 @@
 #include "livre.h"
 #include "emprunt.h"
 
-// Affiche l'accueil (Connexion/Inscription)
+/* -----------------------------------------------
+   affichage.h  -  Déclarations de l'interface
+   ----------------------------------------------- */
+
+// Affiche le menu d'accueil (connexion / inscription)
 void afficherEnteteAccueil();
 
-// Gère TOUTE l'interface une fois que l'utilisateur est connecté
+// Gère toute l'interface une fois connecté
 void gererInterfaceUtilisateur(User current, Livre livres[], Emprunt emprunts[]);
 
 #endif
