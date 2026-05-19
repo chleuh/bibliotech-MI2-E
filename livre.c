@@ -104,6 +104,35 @@ void trierLivresAlpha(Livre livres[], int n) {
     }
 }
 
+// Affiche les livres d'une catégorie donnée (disponibles et empruntés)
+// Retourne le nombre de livres trouvés dans cette catégorie
+int afficherLivresParCategorie(Livre livres[], int n, char categorie[]) {
+    printf("\n" CYAN "📚  ══════════════════════════════════════════\n");
+    printf("      Livres de la catégorie : %s\n", categorie);
+    printf("══════════════════════════════════════════\n" RESET);
+
+    int compteur = 0;
+    for (int i = 0; i < n; i++) {
+        if (strcmp(livres[i].categorie, categorie) == 0) {
+            compteur++;
+            if (livres[i].disponible == 1) {
+                printf(VERT "  ✅ ID: %d" RESET " | %s - %s\n",
+                       livres[i].id, livres[i].titre, livres[i].auteur);
+            } else {
+                printf(ROUGE "  ❌ ID: %d" RESET " | %s - %s"
+                       JAUNE "  ⚠️  DÉJÀ EMPRUNTÉ\n" RESET,
+                       livres[i].id, livres[i].titre, livres[i].auteur);
+            }
+        }
+    }
+
+    if (compteur == 0) {
+        printf(JAUNE "  😔 Aucun livre trouvé dans cette catégorie.\n" RESET);
+    }
+    printf(CYAN "══════════════════════════════════════════\n" RESET);
+    return compteur;
+}
+
 // Tri à bulles par AUTEUR (A → Z)
 void trierAuteursAlpha(Livre livres[], int n) {
     Livre temp;

@@ -113,9 +113,37 @@ void gererInterfaceUtilisateur(User current, Livre livres[], Emprunt emprunts[])
             } else if (countPerso >= max) {
                 printf(ROUGE "\n  🚫 Quota atteint (%d/%d). Rends un livre avant d'en emprunter.\n" RESET, countPerso, max);
             } else {
-                // les livres sont déjà triés par auteur, on affiche directement
-                afficherLivres(livres, nbLivres);
+                // Choix du mode de recherche
+                printf(CYAN "\n  Comment veux-tu chercher le livre ?\n" RESET);
+                printf(BLANC "  [1] Par catégorie\n");
+                printf("  [2] Par ID directement\n" RESET);
+                printf(JAUNE "  Choix : " RESET);
 
+                int modeRecherche;
+                if (scanf("%d", &modeRecherche) != 1) modeRecherche = 0;
+                while (getchar() != '\n');
+
+                int peutEmprunter = 1;
+
+                if (modeRecherche == 1) {
+                    // Recherche par catégorie
+                    char categorie[50];
+                    printf(JAUNE "\n  Catégorie souhaitée : " RESET);
+                    scanf("%49s", categorie);
+                    while (getchar() != '\n');
+
+                    int nbCat = afficherLivresParCategorie(livres, nbLivres, categorie);
+                    if (nbCat == 0) peutEmprunter = 0;
+
+                } else if (modeRecherche == 2) {
+                    // Affichage de tous les livres disponibles
+                    afficherLivres(livres, nbLivres);
+                } else {
+                    printf(ROUGE "\n  ❌ Choix invalide.\n" RESET);
+                    peutEmprunter = 0;
+                }
+
+                if (peutEmprunter) {
                 // Saisie de l'ID
                 printf(JAUNE "\n  ID du livre à emprunter : " RESET);
                 int id;
@@ -149,6 +177,7 @@ void gererInterfaceUtilisateur(User current, Livre livres[], Emprunt emprunts[])
                     }
                 }
                 while (getchar() != '\n');
+                } // fin if (peutEmprunter)
             }
         }
 
@@ -198,6 +227,7 @@ void gererInterfaceUtilisateur(User current, Livre livres[], Emprunt emprunts[])
 
             n.disponible     = 1;
             livres[nbLivres] = n;
+            trierAuteursAlpha(livres, nbLivres + 1);
             sauvegarderLivres(livres, nbLivres + 1);
 
             printf(VERT "\n  ✅ Livre \"%s\" ajouté au stock !\n" RESET, n.titre);

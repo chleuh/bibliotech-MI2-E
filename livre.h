@@ -31,4 +31,7 @@ void trierLivresAlpha(Livre livres[], int n);
 // Trier par AUTEUR alphabétique (nouveau !)
 void trierAuteursAlpha(Livre livres[], int n);
 
+// Afficher les livres disponibles d'une catégorie donnée (retourne le nb trouvé)
+int afficherLivresParCategorie(Livre livres[], int n, char categorie[]);
+
 #endif

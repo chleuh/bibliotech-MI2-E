@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "rendre.h"
+#include "livre.h"
 #include "couleurs.h"
 
 /* -----------------------------------------------
@@ -40,7 +41,8 @@ void rendreLivre(int idLivre, char login[], Livre livres[], int nbLivres, Emprun
     emprunts[indexASupprimer] = emprunts[nbEmprunts - 1];
     nbEmprunts--;
 
-    // Étape 4 : on sauvegarde les livres
+    // Étape 4 : on trie par auteur (A → Z) puis on sauvegarde
+    trierAuteursAlpha(livres, nbLivres);
     sauvegarderLivres(livres, nbLivres);
 
     // Étape 5 : on réécrit le fichier emprunts SANS l'emprunt supprimé
