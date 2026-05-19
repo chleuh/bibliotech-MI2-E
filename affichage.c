@@ -65,12 +65,17 @@ void gererInterfaceUtilisateur(User current, Livre livres[], Emprunt emprunts[])
                 long maintenant       = (long)time(NULL);
                 long secondesRestantes = tempsLimite - maintenant;
 
+                long affichage = tempsLimite + 7200; // fuseau France +2h
+                long h = (affichage % 86400) / 3600;
+                long m = (affichage % 3600)  / 60;
+                long s =  affichage % 60;
+
                 if (secondesRestantes > 0) {
-                    printf(CYAN "  📗 Livre ID: %d" RESET " | Il te reste %ld secondes pour le rendre\n",
-                           emprunts[i].idLivre, secondesRestantes);
+                    printf(CYAN "  📗 Livre ID: %d" RESET " | A rendre avant : %02ld:%02ld:%02ld\n",
+                           emprunts[i].idLivre, h, m, s);
                 } else {
-                    printf(CYAN "  📗 Livre ID: %d" RESET ROUGE "  ⏰ RETARD de %ld secondes !\n" RESET,
-                           emprunts[i].idLivre, -secondesRestantes);
+                    printf(CYAN "  📗 Livre ID: %d" RESET ROUGE "  ⏰ RETARD ! Devait etre rendu a %02ld:%02ld:%02ld\n" RESET,
+                           emprunts[i].idLivre, h, m, s);
                     aRetard = 1;
                 }
                 countPerso++;
