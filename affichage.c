@@ -65,7 +65,7 @@ void gererInterfaceUtilisateur(User current, Livre livres[], Emprunt emprunts[])
                 long maintenant       = (long)time(NULL);
                 long secondesRestantes = tempsLimite - maintenant;
 
-                long affichage = tempsLimite + 7200; // fuseau France +2h
+                long affichage = tempsLimite + 7200; 
                 long h = (affichage % 86400) / 3600;
                 long m = (affichage % 3600)  / 60;
                 long s =  affichage % 60;
