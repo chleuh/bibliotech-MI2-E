@@ -61,17 +61,18 @@ void gererInterfaceUtilisateur(User current, Livre livres[], Emprunt emprunts[])
 
         for (int i = 0; i < nbEmprunts; i++) {
             if (strcmp(emprunts[i].login, current.login) == 0) {
-                long tempsLimite = emprunts[i].dateEmprunt + delai;
-                struct tm *t = localtime(&tempsLimite);
+                long tempsLimite      = emprunts[i].dateEmprunt + delai;
+                long maintenant       = (long)time(NULL);
+                long secondesRestantes = tempsLimite - maintenant;
 
-                printf(CYAN "  📗 Livre ID: %d" RESET " | À rendre avant: %02d:%02d:%02d",
-                       emprunts[i].idLivre, t->tm_hour, t->tm_min, t->tm_sec);
-
-                if (time(NULL) > tempsLimite) {
-                    printf(ROUGE "  ⏰ RETARD !" RESET);
+                if (secondesRestantes > 0) {
+                    printf(CYAN "  📗 Livre ID: %d" RESET " | Il te reste %ld secondes pour le rendre\n",
+                           emprunts[i].idLivre, secondesRestantes);
+                } else {
+                    printf(CYAN "  📗 Livre ID: %d" RESET ROUGE "  ⏰ RETARD de %ld secondes !\n" RESET,
+                           emprunts[i].idLivre, -secondesRestantes);
                     aRetard = 1;
                 }
-                printf("\n");
                 countPerso++;
             }
         }
